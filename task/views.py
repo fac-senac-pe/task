@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+def lista_tarefas(request):
+    tarefas = ["Django", 
+               "Projeto", 
+               "Python é massa",
+               "Estudar",]
+    return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
