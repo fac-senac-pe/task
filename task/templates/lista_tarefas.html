@@ -11,7 +11,7 @@
     <h1>Minha Lista de Tarefas</h1>
     <ul>
         {% for tarefa in tarefas %}
-        <li>{{ tarefa }}</li>
+            <li>{{ tarefa.titulo }} - {% if tarefa.concluida %}Concluída{% else %}Pendente{% endif %}</li>
         {% endfor %}
     </ul>
 </body>
