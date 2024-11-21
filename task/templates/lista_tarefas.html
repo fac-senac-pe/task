@@ -16,7 +16,12 @@
 
     <ul>
         {% for tarefa in tarefas %}
-            <li>{{ tarefa.titulo }} - {% if tarefa.concluida %}Concluída{% else %}Pendente{% endif %}</li>
+            <li>
+                {{ tarefa.titulo }} - {% if tarefa.concluida %}Concluída{% else %}Pendente{% endif %}
+                {% if not tarefa.concluida %}
+                    <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
+                {% endif %}
+            </li>
         {% endfor %}
     </ul>
 </body>
