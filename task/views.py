@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from .models import Tarefa
 
 def lista_tarefas(request):
-    tarefas = Tarefa.objects.all()
+    tarefas = ["Django", 
+               "Projeto", 
+               "Python é massa",
+               "Estudar",]
     return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
