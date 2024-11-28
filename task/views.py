@@ -33,3 +33,6 @@ def editar_tarefa(request, id):
             return redirect('lista_tarefas')
 
     return render(request, 'editar_tarefa.html', {'tarefa': tarefa})
+
+
+    
