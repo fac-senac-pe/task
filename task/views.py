@@ -24,3 +24,15 @@ def concluir_tarefa(request, id):
     tarefa.save()
     return redirect('lista_tarefas')
 
+  
+def editar_tarefa(request, id):
+    tarefa = get_object_or_404(Tarefa, id=id)
+
+    if request.method == 'POST':
+        novo_titulo = request.POST.get('titulo')
+        if novo_titulo:
+            tarefa.titulo = novo_titulo
+            tarefa.save()
+            return redirect('lista_tarefas')
+
+    return render(request, 'editar_tarefa.html', {'tarefa': tarefa})
