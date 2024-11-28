@@ -12,7 +12,10 @@ def lista_tarefas(request):
     tarefas = Tarefa.objects.all()
     return render(request, 'lista_tarefas.html', {'tarefas': tarefas})
 
-
+def excluir_tarefa(request, id):
+    tarefa = get_object_or_404(Tarefa, id=id)
+    tarefa.delete()
+    return redirect('lista_tarefas')
 
 
 def concluir_tarefa(request, id):
@@ -21,7 +24,7 @@ def concluir_tarefa(request, id):
     tarefa.save()
     return redirect('lista_tarefas')
 
-
+  
 def editar_tarefa(request, id):
     tarefa = get_object_or_404(Tarefa, id=id)
 
@@ -33,6 +36,3 @@ def editar_tarefa(request, id):
             return redirect('lista_tarefas')
 
     return render(request, 'editar_tarefa.html', {'tarefa': tarefa})
-
-
-    
