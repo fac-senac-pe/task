@@ -1,44 +1,40 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
+<!-- tarefas/templates/tarefas/lista_tarefas.html -->
+{% extends 'base.html' %}
+{% block title %}Lista de Tarefas{% endblock %}
+{% block content %}
+<div class="conteudo">
+    {% if user.is_authenticated %}
+        <p>Bem-vindo, {{ user.username }}!
+            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Sair</button>
+            </form>
+        </p>
+    {% else %}
+        <a href="{% url 'login' %}">Entrar</a>
+    {% endif %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Tarefa</title>
-</head>
-
-<body>
-    <h1>Minha Lista de Tarefas</h1>
-
-       {% if user.is_authenticated %}
-   <p>Bem-vindo, {{ user.username }}! 
-       <form action="{% url 'logout' %}" method="post">
-           {% csrf_token %}
-           <button type="submit">Sair</button>
-       </form>        
-   </p>
-   {% else %}
-   <a href="{% url 'login' %}">Entrar</a>
-   {% endif %}
-
-    <form method="POST">
+    <form method="POST" class="form-adicionar-tarefa">
         {% csrf_token %}
         <input type="text" name="titulo" placeholder="Adicione uma nova tarefa" required>
         <button type="submit">Adicionar</button>
     </form>
 
-    <ul>
+    <ul class="lista-tarefas">
         {% for tarefa in tarefas %}
-        <li>
-            {{ tarefa.titulo }} - {% if tarefa.concluida %}Concluída{% else %}Pendente{% endif %}
-            <a href="{% url 'excluir_tarefa' tarefa.id %}">Excluir</a>
-            {% if not tarefa.concluida %}
-            <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
-            <a href="{% url 'editar_tarefa' tarefa.id %}">Editar</a>
-            {% endif %}
-        </li>
+            <li class="{% if tarefa.concluida %}tarefa-concluida{% endif %}">
+                {{ tarefa.titulo }}
+                <div class="acoes">
+                    {% if not tarefa.concluida %}
+                        <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
+                    {% endif %}
+                    <a href="{% url 'editar_tarefa' tarefa.id %}">Editar</a>
+                    <a href="{% url 'excluir_tarefa' tarefa.id %}" onclick="return confirmarExclusao();">Excluir</a>
+                </div>
+            </li>
+        {% empty %}
+            <li>Nenhuma tarefa adicionada.</li>
         {% endfor %}
     </ul>
-</body>
-
-</html>
+</div>
+{% endblock %}
