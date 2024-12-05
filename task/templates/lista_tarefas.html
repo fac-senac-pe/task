@@ -23,6 +23,7 @@
             <a href="{% url 'excluir_tarefa' tarefa.id %}">Excluir</a>
             {% if not tarefa.concluida %}
             <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
+            <a href="{% url 'editar_tarefa' tarefa.id %}">Editar</a>
             {% endif %}
         </li>
         {% endfor %}
