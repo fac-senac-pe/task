@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lista de Tarefa</title>
 </head>
+
 <body>
     <h1>Minha Lista de Tarefas</h1>
-    
+
     <form method="POST">
         {% csrf_token %}
         <input type="text" name="titulo" placeholder="Adicione uma nova tarefa" required>
@@ -16,13 +18,15 @@
 
     <ul>
         {% for tarefa in tarefas %}
-            <li>
-                {{ tarefa.titulo }} - {% if tarefa.concluida %}Concluída{% else %}Pendente{% endif %}
-                {% if not tarefa.concluida %}
-                    <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
-                {% endif %}
-            </li>
+        <li>
+            {{ tarefa.titulo }} - {% if tarefa.concluida %}Concluída{% else %}Pendente{% endif %}
+            <a href="{% url 'excluir_tarefa' tarefa.id %}">Excluir</a>
+            {% if not tarefa.concluida %}
+            <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
+            {% endif %}
+        </li>
         {% endfor %}
     </ul>
 </body>
+
 </html>
