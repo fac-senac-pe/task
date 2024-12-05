@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect
 from .models import Tarefa
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 
+@login_required
 def lista_tarefas(request):
     if request.method == 'POST':
         titulo = request.POST.get('titulo')
