@@ -7,17 +7,22 @@
  
 </head>
 
-<body style="text-align: center; background-color: rgba(74, 112, 216, 0.521);">
-    <h2 ">Login</h2>
+<body style="text-align: center; background-color: rgba(167, 171, 180, 0.521);">
+    <nav style="margin-block-end: auto; background-color: black; color: whitesmoke; width: 100% ; height: 100px; text-align: center;font-size: xxx-large; padding-top: 25px; "  class="navbar navbar-light bg-light">
+        <span class="navbar-text">
+          Login
+        </span>
+      </nav>
     <form method="POST" ">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" ">Entrar</button>
+        <button type="submit" >Entrar</button>
     </form>
-    <button> <a href="{% url 'password_reset' %}" >Esqueci minha senha</a>
-    </button>
-    
+    <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" <a href="{% url 'password_reset' %}" >
+        esqueci a senha
+      </button>
     
 </body>
+
 
 </html>
