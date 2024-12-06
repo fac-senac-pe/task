@@ -1,42 +1,55 @@
-<!-- tarefas/templates/tarefas/lista_tarefas.html -->
 {% extends 'base.html' %}
 {% block title %}Lista de Tarefas{% endblock %}
 {% block content %}
-<div class="conteudo" >
-    {% if user.is_authenticated %}
 
-        <p >Bem-vindo, {{ user.username }}!
-            <form action="{% url 'logout' %}" method="post" style="display:inline;">
+<nav class="navbar navbar-light bg-light justify-content-center">
+    <a class="navbar-brand" href="#" >
+        {% if user.is_authenticated %}
+            <img !important src="/task/templates/static/img/User_icon_2.svg.png" alt="">
+            Bem-vindo, {{ user.username }}!
+            <form action="{% url 'logout' %}" method="post" class="d-inline">
                 {% csrf_token %}
-                <button type="submit">Sair</button>
+                <button type="submit" class="btn btn-outline-danger btn-sm ml-2">Sair</button>
             </form>
-        </p>
-    
-    {% else %}
-        <a href="{% url 'login' %}">Entrar</a>
-    {% endif %}
+        {% else %}
+            <a href="{% url 'login' %}" class="btn btn-outline-primary">Entrar</a>
+        {% endif %}
+    </a>
+</nav>
 
-    <form method="POST" class="form-adicionar-tarefa">
+<div class="container d-flex flex-column justify-content-center align-items-center mt-4">
+    <form method="POST" class="form-inline mb-3 w-100" style="max-width: 500px;">
         {% csrf_token %}
-        <input type="text" name="titulo" placeholder="Adicione uma nova tarefa" required>
-        <button type="submit">Adicionar</button>
+        <div class="input-group w-100">
+            <input type="text" name="titulo" class="form-control" placeholder="Adicione uma nova tarefa" required>
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Adicionar</button>
+            </div>
+        </div>
     </form>
 
-    <ul class="lista-tarefas">
+    <ul class="list-group w-100" style="max-width: 500px;">
         {% for tarefa in tarefas %}
-            <li class="{% if tarefa.concluida %}tarefa-concluida{% endif %}">
+            <li class="list-group-item d-flex justify-content-between align-items-center {% if tarefa.concluida %}list-group-item-success{% endif %}">
                 {{ tarefa.titulo }}
-                <div class="acoes">
+                <div class="btn-group" role="group">
                     {% if not tarefa.concluida %}
-                        <a href="{% url 'concluir_tarefa' tarefa.id %}">Concluir</a>
+                        <a href="{% url 'concluir_tarefa' tarefa.id %}" class="btn btn-outline-success btn-sm">Concluir</a>
                     {% endif %}
-                    <a href="{% url 'editar_tarefa' tarefa.id %}">Editar</a>
-                    <a href="{% url 'excluir_tarefa' tarefa.id %}" onclick="return confirmarExclusao();">Excluir</a>
+                    <a href="{% url 'editar_tarefa' tarefa.id %}" class="btn btn-outline-warning btn-sm">Editar</a>
+                    <a href="{% url 'excluir_tarefa' tarefa.id %}" class="btn btn-outline-danger btn-sm" onclick="return confirmarExclusao();">Excluir</a>
                 </div>
             </li>
         {% empty %}
-            <li>Nenhuma tarefa adicionada.</li>
+            <li class="list-group-item text-center">Nenhuma tarefa adicionada.</li>
         {% endfor %}
     </ul>
 </div>
+
+<footer class="footer mt-auto py-3 bg-light">
+    <div class="container text-center">
+        <span class="text-muted">Task Turma TADS031</span>
+    </div>
+</footer>
+
 {% endblock %}
