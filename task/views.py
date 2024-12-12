@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from .models import Tarefa
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Tarefa
@@ -22,6 +24,12 @@ def lista_tarefas(request):
     tarefas = Tarefa.objects.filter(usuario=request.user)
     return render(request, 'lista_tarefas.html', {'tarefas': tarefas, 'form': form})
 
+def concluir_tarefa(request, id):
+    tarefa = get_object_or_404(Tarefa, id=id)
+    tarefa.concluida = True
+    tarefa.save()
+    return redirect('lista_tarefas')
+
 @login_required
 def editar_tarefa(request, id):
     tarefa = get_object_or_404(Tarefa, id=id, usuario=request.user)
@@ -37,3 +45,9 @@ def editar_tarefa(request, id):
         form = TarefaForm(instance=tarefa)
 
     return render(request, 'editar_tarefa.html', {'form': form})
+
+
+def excluir_tarefa(request, id):
+    tarefa = get_object_or_404(Tarefa, id=id)
+    tarefa.delete()
+    return redirect('lista_tarefas')
