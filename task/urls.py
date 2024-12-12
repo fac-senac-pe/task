@@ -1,11 +1,13 @@
-from django.urls import path
-from . import views
+from django.contrib import admin
+from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', views.lista_tarefas, name='lista_tarefas'),
-    path('concluir/<int:id>/', views.concluir_tarefa, name='concluir_tarefa'),
-    path('excluir/<int:id>/', views.excluir_tarefa, name='excluir_tarefa'),
-    path('editar/<int:id>/', views.editar_tarefa, name='editar_tarefa'),
+    path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('', include('tarefas.urls')),
 ]
 
-
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
