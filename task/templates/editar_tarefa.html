@@ -1,62 +1,12 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Tarefa</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        html, body {
-            height: 100%;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .form-container {
-            max-width: 500px;
-            width: 100%;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-        }
-
-        .footer {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 60px;
-            background-color: #f8f9fa;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="container d-flex flex-column justify-content-center align-items-center">
-        <h1 class="mb-4">Editar Tarefa</h1>
-        <form method="POST" class="form-container">
-            {% csrf_token %}
-            <div class="form-group">
-                <input type="text" name="titulo" class="form-control" value="{{ tarefa.titulo }}" required>
-            </div>
-            <button type="submit" class="btn btn-primary btn-block">Salvar</button>
-        </form>
-    </div>
-
-    <footer class="footer mt-auto py-3">
-        <div class="container text-center">
-            <span class="text-muted">Task Turma TADS031</span>
-        </div>
-    </footer>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block title %}Editar Tarefa{% endblock %}
+{% block content %}
+<h2>Editar Tarefa</h2>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <button type="submit" class="btn btn-primary">Salvar</button>
+    <a href="{% url 'lista_tarefas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
